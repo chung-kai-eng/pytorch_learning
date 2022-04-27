@@ -25,3 +25,12 @@
 ![](https://i.imgur.com/unjyMuv.png)
 - **putting batch normalization after the addition significantly hurt test error on CIFAR**
 - After construct the model, try to alternate different optimizer
+
+
+### High level Consideration
+- [Going deeper with convolutions](https://arxiv.org/pdf/1409.4842.pdf)
+- increase the depth, the number of levels, and model's width (the number of units at each level) to increase the model quality
+- Bigger size means a larger number of parameters, more prone to overfitting and more computation resource.
+- Inception architecture was especially useful in the context of localization and object detection
+- ```Inception modules``` are stacked on top of each other, features of higher abstaction are captured by higher layers, their spatial concentration is expected to decrease suggesting that the ratio of 3x3 and 5x5 convolutions should increase as we move to higher layers
+- It seems beneficial to start **using Inception modules only at higher layers while keeping the lower layers in traditional convolutional fashion**
