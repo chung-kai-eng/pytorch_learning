@@ -93,6 +93,8 @@ model = VAE(latent_dim).to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
+loss_fn = nn.KLDivLoss()
+
 for epoch in range(num_epochs):
     train_per_epoch(train_loader, model, loss_fn, optimizer, show_pred_result=False)
     predict_per_epoch(test_loader, model, loss_fn, optimizer, show_pred_result=False)

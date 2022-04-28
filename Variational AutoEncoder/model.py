@@ -10,15 +10,12 @@ from torch.distributions import Normal
 # Backpropagation: the backward pass for a max(x, y) operation has a simple interpretation as only routing the gradient to the input that has the highest value in the forward pass
 # kernel size is correspond to MNIST dataset
 
-
 """
 [Striving for Simplicity: The All Convolutional Net](): propose to discard the pooling layer in favor of architecture that only consists of repeated CONV layers
 To reduce the size of the representation they suggest using larger stride in CONV layer (discard pooling layers for VAE or other generative model)
 [View the interpretation](https://cs231n.github.io/convolutional-networks/)
+[Variational AutoEncoder](https://medium.com/dataseries/variational-autoencoder-with-pytorch-2d359cbf027b)
 """
-
-from torch.distributions import Normal
-
 
 class Encoder(nn.Module):
     def __init__(self, latent_dim):
