@@ -3,7 +3,7 @@
 
 
 ### Computer Vision
-- [More about Convolution](https://github.com/chung-kai-eng/pytorch_learning/blob/main/More%20about%20Convolution.md)
+- [More about Convolution](https://github.com/chung-kai-eng/pytorch_learning/blob/main/Computer%20Vision/More%20about%20Convolution.md)
 - [Pretrained Model](https://github.com/chung-kai-eng/pytorch_learning/tree/main/Computer%20Vision)
 
 
