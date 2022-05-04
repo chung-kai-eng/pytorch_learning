@@ -25,6 +25,8 @@
 ![](https://i.imgur.com/unjyMuv.png)
 - **putting batch normalization after the addition significantly hurt test error on CIFAR**
 - After construct the model, try to alternate different optimizer
+- [ResNet architecture](https://arxiv.org/pdf/1512.03385.pdf)
+![image](https://user-images.githubusercontent.com/54303314/166627494-14f62129-d37d-4fdd-a1f0-ee0232bcc243.png)
 
 
 ### High level Consideration
