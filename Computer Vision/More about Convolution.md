@@ -1,4 +1,5 @@
 [More information about convolution (standford lecture)](https://cs231n.github.io/convolutional-networks/)
+[Conv versus ConvTranspose (the operation procedure)](https://blog.csdn.net/weixin_39228381/article/details/112970097)
 
 ## Comparison between two structure
 - ```INPUT -> [CONV -> RELU -> POOL]*2 -> FC -> RELU -> FC```: a single convlution layer between every pooling layer
