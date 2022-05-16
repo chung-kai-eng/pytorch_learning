@@ -1,6 +1,6 @@
 # pytorch_learning
 
-
+- [pytorch quick start](https://github.com/chung-kai-eng/pytorch_learning/blob/main/pytorch%20quick%20introduction.md)
 
 ### Computer Vision
 - [More about Convolution](https://github.com/chung-kai-eng/pytorch_learning/blob/main/Computer%20Vision/More%20about%20Convolution.md)
