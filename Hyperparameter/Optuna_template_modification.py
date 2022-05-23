@@ -23,6 +23,7 @@ HYPER['train_parameter']['batch_size'] = [64, 128, 256]
 HYPER['train_parameter']['optimizer'] = ["Adam", "RMSprop", "SGD"]
 HYPER['train_parameter']['learning_rate'] = [1e-5, 1e-2] # [min, max]
 HYPER['train_parameter']['loss_fn'] = []
+
 HYPER['model_parameter']['num_layers'] = [2, 4]
 
 EPOCHS = 10
@@ -31,7 +32,10 @@ loss_fn = nn.CrossEntropy() # nn.MSELoss
 CUDA = torch.cuda.is_available()
 DEVICE = torch.device("cuda" if CUDA else "cpu")
 
-def get_data_loader():
+def get_data_loader(trial, train_parameter):
+    # define train parameter
+    batch_size = trial.suggest_categorical('batch_size', train_parameter['batch_size'])
+    
     return train_loader, validate_loader
 
 def define_model(trial, model_parameter):
@@ -76,8 +80,6 @@ def objective(trial, train_parameter):
     model = define_model(trial, train_parameter).to(DEVICE)
     train_loader, validate_loader = get_data_loader()
 
-    # define train parameter
-    batch_size = trial.suggest_categorical('batch_size', train_parameter['batch_size'])
     optimizer_name = trial.suggest_categorical('optimizer', train_parameter['optimizer'])
     lr = trial.suggest_float('lr', train_parameter['learning_rate'][0], train_parameter['learning_rate'][1], log=True)
     optimizer = getattr(torch.optim, optimizer_name)(model.parameters(), lr=lr)
