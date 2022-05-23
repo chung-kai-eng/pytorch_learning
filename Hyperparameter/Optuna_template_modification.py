@@ -137,4 +137,3 @@ def objective(trial, train_parameter):
         if trial.should_prune():
             raise optuna.exceptions.TrialPruned()
 
-    return accuracy
