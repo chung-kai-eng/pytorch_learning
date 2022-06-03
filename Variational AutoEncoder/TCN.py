@@ -2,6 +2,7 @@
 import torch
 import torch.nn as nn
 from torch.nn.utils import weight_norm
+import torch.nn.functional as F
 
 
 class Chomp1d(nn.Module): # padding
@@ -16,7 +17,6 @@ class Chomp1d(nn.Module): # padding
 class TemporalBlock(nn.Module):
     def __init__(self, n_inputs, n_outputs, kernel_size, stride, dilation, padding, dropout=0.2):
         super(TemporalBlock, self).__init__()
-        print(padding)
         self.conv1 = weight_norm(nn.Conv1d(n_inputs, n_outputs, kernel_size,
                                            stride=stride, padding=padding, dilation=dilation))
         self.chomp1 = Chomp1d(padding)
@@ -75,8 +75,9 @@ class TemporalConvNet(nn.Module):
 # num_input -> num_channel[0] -> num_channel[1]
 # num_input -> num_channel[0] -> num_channel[1]
 # num_input -> num_channel[0] -> num_channel[1]
+# num_input -> num_channel[0] -> num_channel[1]
 class TCNEncoder(nn.Module):
-    def __init__(self, input_shape=None, num_tcn_layers=3, tcn_num_channels=[64, 32, 16], kernel_size=3, latent_dim=10):
+    def __init__(self, input_shape=None, num_tcn_layers=None, tcn_num_channels=[64, 32, 16], kernel_size=3, latent_dim=10):
         """
         num_inputs {}
         kernel_size {int}: receptive field (the period of time)
@@ -102,12 +103,13 @@ class TCNEncoder(nn.Module):
 
         self.encode_tcn_layer = nn.Sequential(*layers)
 
-        self.linear1 = nn.Linear(16*2, latent_dim) # compute mean
-        self.linear2 = nn.Linear(16*2, latent_dim) # compute log variance
+        self.linear1 = nn.Linear(16*4, latent_dim) # compute mean
+        self.linear2 = nn.Linear(16*4, latent_dim) # compute log variance
 
     def compute_input_shape(self, pooling_kernel_size=2):
         # causal padding = (kernel_size - 1) * dilation
         self.dynamic_input_shape = self.dynamic_input_shape // pooling_kernel_size
+
 
     def forward(self, x):
         x = self.encode_tcn_layer(x)
@@ -129,17 +131,17 @@ class TCNDecoder(nn.Module):
 
         # with opposite order of num_channels in encoder
         num_tcn_layers = len(tcn_num_channels)
-        self.linear1 = nn.Linear(latent_dim, 16*2)
-        self.unflatten = nn.Unflatten(dim=1, unflattened_size=torch.Size([16, 2])) # 
+        self.linear1 = nn.Linear(latent_dim, 16*4)
+        self.unflatten = nn.Unflatten(dim=1, unflattened_size=torch.Size([16, 4])) # 
         self.dynamic_input_shape = latent_dim
-        self.dynamic_input_channel = 16 # input_channel -> tcn_num_channel (final channel of tcn)
+        self.dynamic_input_channel = tcn_num_channels[-1] # input_channel -> tcn_num_channel (final channel of tcn)
 
         layers = []
 
         for i in range(num_tcn_layers):
             if i != 0:
                 self.compute_input_shape(pooling_kernel_size=2)
-                self.dynamic_input_channel = tcn_num_channels[-1]
+                # self.dynamic_input_channel = tcn_num_channels[-1]
             
             layers.append(nn.Upsample(scale_factor=2))
             layers.append(nn.BatchNorm1d(tcn_num_channels[-1]))
@@ -149,7 +151,7 @@ class TCNDecoder(nn.Module):
 
         self.decoder_tcn_layer = nn.Sequential(*layers)
         # for the last layer use same padding
-        # self.output = nn.Conv1d( kernel_size=3, padding='same', activation='sigmoid' ) # softmax (multi-class)
+        self.output = nn.Conv1d(in_channels=tcn_num_channels[-1], out_channels=10 , kernel_size=3, padding='same') # softmax (multi-class)
 
     def compute_input_shape(self, pooling_kernel_size=2):
         # causal padding = (kernel_size - 1) * dilation
@@ -158,19 +160,19 @@ class TCNDecoder(nn.Module):
     def forward(self, x):
         x = self.linear1(x)
         x = self.unflatten(x) # reshape 
-        print('after unflatten: ', x.shape)
         x = self.decoder_tcn_layer(x)
         print('after decoder: ', x.shape)
-        x = self.output(x)
-
+        x = F.sigmoid(self.output(x))
+        print(x.shape)
         return x
 
 
+
 class TCN_VAE(nn.Module):
-    def __init__(self):
+    def __init__(self, input_shape=(10, 32), latent_dim=10): # suggest use 2^4 * k (k can be any integer)
         super(TCN_VAE, self).__init__()
-        self.encoder = TCNEncoder(input_shape=(10, 20), num_tcn_layers=3, latent_dim=10)
-        self.decoder = TCNDecoder(latent_dim=10, num_tcn_layers=3)
+        self.encoder = TCNEncoder(input_shape=input_shape, num_tcn_layers=3, latent_dim=latent_dim)
+        self.decoder = TCNDecoder(latent_dim=latent_dim, num_tcn_layers=3)
         self.Normal_dist = torch.distributions.Normal(0, 1) # for reparameterization
         self.loss = 0
 
@@ -184,6 +186,7 @@ class TCN_VAE(nn.Module):
         z = self.reparameterize(mu, log_var)
         output = self.decoder(z)
         return output, mu, log_var
+
 
 
 class TCN(nn.Module):
