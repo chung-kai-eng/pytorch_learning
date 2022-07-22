@@ -52,6 +52,7 @@
     - Step 2: Use $C_{in} \times 1 \times 1$ cross-channel filter to weighted sum ($C_{out}$) filters ( $C_{in} \times 1 \times 1 \times C_{out}$ ) 
 
 ```python=
+# used in MobileNet 
 class DepthwiseConv(nn.Module):
     def __init__(self, num_in, num_out):
         super(DepthwiseConv, self).__init__()
@@ -63,4 +64,14 @@ class DepthwiseConv(nn.Module):
         out = self.pointwise(x)
         return out
 ```
+
+### DenseNet
+- Refer to ResNet. Add residual (shortcut) connection
+- At least shortcut 2 layers (3 layers, 4 layers, etc)
+- More efficient than ResNet (# of parameters, # of flops)
+![image](https://user-images.githubusercontent.com/54303314/180369356-19707bd2-0579-4afe-b714-ad781e075244.png)
+- It shows that it is helpful for learning due to the fact that some of the L1 norm weight is not equal to 0
+![image](https://user-images.githubusercontent.com/54303314/180369833-0ffaa589-319a-47a1-8e1c-ee94d3ef75ee.png)
+
+
 
