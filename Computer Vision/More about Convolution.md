@@ -72,9 +72,7 @@ class DepthwiseConv(nn.Module):
 ![image](https://user-images.githubusercontent.com/54303314/180369356-19707bd2-0579-4afe-b714-ad781e075244.png)
 - It shows that it is helpful for learning due to the fact that some of the L1 norm weight is not equal to 0
 ![image](https://user-images.githubusercontent.com/54303314/180370569-cd902dbd-b913-4a31-b775-389f1e796d84.png)
-- Insight:
-    1. ReLU is capable of preserving complete information about the input manifold, but only if the input manifold lies in a low-dimensional subspace of the
-input space
+
 
 ### [MobileNetV2 (2018)](https://arxiv.org/pdf/1801.04381v4.pdf)
 - Consider ResNet concept (shortcut connection) into MobileNet
@@ -85,6 +83,9 @@ input space
 - The difference between residual block and inverted residual block
     - ```inverted residual block``` connect the bottlenecks   
 ![image](https://user-images.githubusercontent.com/54303314/180371625-d581e9a1-a426-42fe-9963-80dcf1cc430e.png)
+- Insight:
+    1. **ReLU** is capable of p**reserving complete information** about the input manifold, but **only if the input manifold lies in a low-dimensional subspace** of the
+input space
 
 ### [EfficientNet (2019)](https://arxiv.org/pdf/1905.11946.pdf)
 - Rethink model scaling for convolution (```resolution, width, depth```)
