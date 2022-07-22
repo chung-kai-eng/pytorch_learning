@@ -75,10 +75,11 @@ class DepthwiseConv(nn.Module):
 
 ### [MobileNetV2 (2018)](https://arxiv.org/pdf/1801.04381v4.pdf)
 - Consider ResNet concept (shortcut connection) into MobileNet
-- New block: **Inverted residual block**
+- New block: ```Inverted residual block```
 - **Fewer Non-linear operation, more channels in block**
     - Activatin function: **Linear & ReLU6** (fewer non-linear)
     - Channel Expansion: **Increase the channels** in the bottleneck block 
+    - 
 ![image](https://user-images.githubusercontent.com/54303314/180371625-d581e9a1-a426-42fe-9963-80dcf1cc430e.png)
 
 ### [EfficientNet (2019)](https://arxiv.org/pdf/1905.11946.pdf)
@@ -90,7 +91,9 @@ class DepthwiseConv(nn.Module):
     - Make FLOPs ~ $2^\phi$ (The FLOPs of a conventional conv. is proportional to $d, \ w^2 \ r^2$
 ![image](https://user-images.githubusercontent.com/54303314/180371963-1dbb9c87-6153-4661-8353-42a09eb8135d.png)
 ![image](https://user-images.githubusercontent.com/54303314/180372103-38206363-b4e4-4a85-90ef-b2ed61f6f376.png)
-- EfficientNet-B0 (baseline): $\alpha=1.2$, $\beta=1.1$, $\gamma=1.15$
-- **MBConv6** is refered to Inverted residual block
+- Step 1: EfficientNet-B0 (baseline): $\alpha=1.2$, $\beta=1.1$, $\gamma=1.15$
+- Step 2: Fix $\alpha, \ \beta, \ \gamma$ and scale up baseline network with different $\phi$ to obtain EfficientNet-B1 to B7
+- **MBConv6** is refered to ```Inverted residual block```
 
+![image](https://user-images.githubusercontent.com/54303314/180372854-bedbfee5-90fc-431d-9353-329e25d93bfc.png)
 
