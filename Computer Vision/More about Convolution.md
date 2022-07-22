@@ -44,9 +44,9 @@
 ### FLOPs
 - A measure of computation cost 
     - 1 FLOP = 1 addition + 1 multiplication e.g. wx+b
-- For traditional convolution: # of FLOPs = $O(C_{in} \cdot k^2 \cdot C_{out} \cdot H_{out} \cdot W_{out}$
-    - Model size:   $C_{in} \cdot k^2 \cdot C_{out}$
+- For traditional convolution: # of FLOPs = $O(C_{in} \times k^2 \times C_{out} \times H_{out} \times W_{out}$
+    - Model size:   $C_{in} \times k^2 \times C_{out}$
 - For depthwise convolution: 
-    - Model size:   $C_{in} \cdot k^2  + C_{in} \cdot 1 \cdot 1 \cdot C_{out}$
-    - Step 1: # of filter = # of channel 每個filter對應其中一個filter ( $C_{in} \cdot k^2$ )
-    - Step 2: Use $C_{in} \cdot 1 \cdot 1$ cross-channel filter to weighted sum ($C_{out}$) filters ( $C_{in} \cdot 1 \cdot 1 \cdot C_{out}$ ) 
+    - Model size:   $C_{in} \times k^2  + C_{in} \times 1 \times 1 \times C_{out}$
+    - Step 1: # of filter = # of channel 每個filter對應其中一個filter ( $C_{in} \times k^2$ )
+    - Step 2: Use $C_{in} \times 1 \times 1$ cross-channel filter to weighted sum ($C_{out}$) filters ( $C_{in} \times 1 \times 1 \times C_{out}$ ) 
