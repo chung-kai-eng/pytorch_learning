@@ -38,3 +38,15 @@
 - Inception architecture was especially useful in the context of localization and object detection
 - ```Inception modules``` are stacked on top of each other, features of higher abstaction are captured by higher layers, their spatial concentration is expected to decrease suggesting that the ratio of 3x3 and 5x5 convolutions should increase as we move to higher layers
 - It seems beneficial to start **using Inception modules only at higher layers while keeping the lower layers in traditional convolutional fashion**
+
+
+
+### FLOPs
+- A measure of computation cost 
+    - 1 FLOP = 1 addition + 1 multiplication e.g. wx+b
+- For traditional convolution: # of FLOPs = $O(C_{in} \cdot k^2 \cdot C_{out} \cdot H_{out} \cdot W_{out}$
+    - Model size:   $C_{in} \cdot k^2 \cdot C_{out}$
+- For depthwise convolution: 
+    - Model size:   $C_{in} \cdot k^2  + C_{in} \cdot 1 \cdot 1 \cdot C_{out}$
+    - Step 1: # of filter = # of channel 每個filter對應其中一個filter ( $C_{in} \cdot k^2$ )
+    - Step 2: Use $C_{in} \cdot 1 \cdot 1$ cross-channel filter to weighted sum ($C_{out}$) filters ( $C_{in} \cdot 1 \cdot 1 \cdot C_{out}$ ) 
