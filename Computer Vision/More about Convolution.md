@@ -65,13 +65,32 @@ class DepthwiseConv(nn.Module):
         return out
 ```
 
-### DenseNet
+### DenseNet (2017)
 - Refer to ResNet. Add residual (shortcut) connection
 - At least shortcut 2 layers (3 layers, 4 layers, etc)
 - More efficient than ResNet (# of parameters, # of flops)
 ![image](https://user-images.githubusercontent.com/54303314/180369356-19707bd2-0579-4afe-b714-ad781e075244.png)
 - It shows that it is helpful for learning due to the fact that some of the L1 norm weight is not equal to 0
-![image](https://user-images.githubusercontent.com/54303314/180369833-0ffaa589-319a-47a1-8e1c-ee94d3ef75ee.png =450x300)
+![image](https://user-images.githubusercontent.com/54303314/180370569-cd902dbd-b913-4a31-b775-389f1e796d84.png)
 
+### [MobileNetV2 (2018)](https://arxiv.org/pdf/1801.04381v4.pdf)
+- Consider ResNet concept (shortcut connection) into MobileNet
+- New block: **Inverted residual block**
+- **Fewer Non-linear operation, more channels in block**
+    - Activatin function: **Linear & ReLU6** (fewer non-linear)
+    - Channel Expansion: **Increase the channels** in the bottleneck block 
+![image](https://user-images.githubusercontent.com/54303314/180371625-d581e9a1-a426-42fe-9963-80dcf1cc430e.png)
+
+### [EfficientNet (2019)](https://arxiv.org/pdf/1905.11946.pdf)
+- Rethink model scaling for convolution (```resolution, width, depth```)
+- higher resolution: # of pixels, wider: more channels, deeper: more layers
+- In the past research, most of the study only change one dimension (```resolution, width, depth```).
+- Insight:
+    - Consider all dimension for compound scaling (interaction)
+    - Make FLOPs ~ $2^\phi$ (The FLOPs of a conventional conv. is proportional to $d, \ w^2 \ r^2$
+![image](https://user-images.githubusercontent.com/54303314/180371963-1dbb9c87-6153-4661-8353-42a09eb8135d.png)
+![image](https://user-images.githubusercontent.com/54303314/180372103-38206363-b4e4-4a85-90ef-b2ed61f6f376.png)
+- EfficientNet-B0 (baseline): $\alpha=1.2$, $\beta=1.1$, $\gamma=1.15$
+- **MBConv6** is refered to Inverted residual block
 
 
