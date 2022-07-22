@@ -22,12 +22,12 @@
     - The **pooling layer**: commonly use **```kernel_size=2, stride=2```**
 
 
-### Different Residual Block
+### [ResNet (2016)](https://arxiv.org/pdf/1512.03385.pdf) Different Residual Block
 - [More exploration about residual net](http://torch.ch/blog/2016/02/04/resnets.html)
+- Residualblock (2 layers shortcut connection) & BottleNeck (3 layers shortcut connection)
 ![](https://i.imgur.com/unjyMuv.png)
 - **putting batch normalization after the addition significantly hurt test error on CIFAR**
 - After construct the model, try to alternate different optimizer
-- [ResNet architecture](https://arxiv.org/pdf/1512.03385.pdf)
 ![image](https://user-images.githubusercontent.com/54303314/166627494-14f62129-d37d-4fdd-a1f0-ee0232bcc243.png)
 
 
@@ -96,4 +96,6 @@ class DepthwiseConv(nn.Module):
 - **MBConv6** is refered to ```Inverted residual block```
 
 ![image](https://user-images.githubusercontent.com/54303314/180372854-bedbfee5-90fc-431d-9353-329e25d93bfc.png)
+![image](https://user-images.githubusercontent.com/54303314/180374098-367ba352-0f7d-445d-ae8d-980f26a6f45e.png)
+
 
