@@ -42,11 +42,25 @@
 
 
 ### FLOPs
-- A measure of computation cost 
-    - 1 FLOP = 1 addition + 1 multiplication e.g. wx+b
+- A measure of **computation cost** 
+    - **1 FLOP = 1 addition + 1 multiplication e.g. wx+b**
 - For traditional convolution: # of FLOPs = $O(C_{in} \times k^2 \times C_{out} \times H_{out} \times W_{out}$
     - Model size:   $C_{in} \times k^2 \times C_{out}$
 - For depthwise convolution: 
     - Model size:   $C_{in} \times k^2  + C_{in} \times 1 \times 1 \times C_{out}$
     - Step 1: # of filter = # of channel 每個filter對應其中一個filter ( $C_{in} \times k^2$ )
     - Step 2: Use $C_{in} \times 1 \times 1$ cross-channel filter to weighted sum ($C_{out}$) filters ( $C_{in} \times 1 \times 1 \times C_{out}$ ) 
+
+```python=
+class DepthwiseConv(nn.Module):
+    def __init__(self, num_in, num_out):
+        super(DepthwiseConv, self).__init__()
+        self.depthwise = nn.Conv2d(num_in, num_in, kernel_size=3, padding=1, groups=num_in)
+        self.pointwise = nn.Conv2d(num_in, num_out, kernel_size=1)
+       
+    def forward(self, x):
+        x = self.depthwise(x)
+        out = self.pointwise(x)
+        return out
+```
+
