@@ -15,3 +15,6 @@
 
 ### Others
 - [Variational AutoEncoder](https://github.com/chung-kai-eng/pytorch_learning/blob/main/Variational%20AutoEncoder/Variational%20autoencoder.ipynb)
+
+- [Pretrained Model on pytorch hub](https://www.tensorflow.org/hub)
+- [Pretrained Model on tensorflow hub](https://pytorch.org/hub/research-models)
