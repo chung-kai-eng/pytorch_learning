@@ -55,6 +55,13 @@ class CustomImageDataset(Dataset):
             label = self.target_transform(label)
         return image, label
 ```
+- For grayscale image, convert it into RGB images ```Image.open('PATH').convert('RGB')```
+- Another way:
+    - ```torchvision.io.ImageReadMode.GRAY``` for converting to grayscale
+    - ```torchvision.io.ImageReadMode.RGB``` for converting to RGB with transparency
+```python
+image = read_image(img_path, mode=ImageReadMode.RGB)
+```
 - [Load Pandas Dataframe using Dataset and DataLoader in PyTorch](https://androidkt.com/load-pandas-dataframe-using-dataset-and-dataloader-in-pytorch/)
 ```python=
 class CustomDataset(Dataset):
