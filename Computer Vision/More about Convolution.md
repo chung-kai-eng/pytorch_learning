@@ -100,7 +100,20 @@ input space
 - Step 2: Fix $\alpha, \ \beta, \ \gamma$ and scale up baseline network with different $\phi$ to obtain EfficientNet-B1 to B7
 - **MBConv6** is refered to ```Inverted residual block```
 
-![image](https://user-images.githubusercontent.com/54303314/180372854-bedbfee5-90fc-431d-9353-329e25d93bfc.png)
-![image](https://user-images.githubusercontent.com/54303314/180374098-367ba352-0f7d-445d-ae8d-980f26a6f45e.png)
+<img src=https://user-images.githubusercontent.com/54303314/180372854-bedbfee5-90fc-431d-9353-329e25d93bfc.png width="450" height="350">
+<img src=https://user-images.githubusercontent.com/54303314/180374098-367ba352-0f7d-445d-ae8d-980f26a6f45e.png width="400" height="400">
 
 
+
+### [ResNeXt (2017)](https://arxiv.org/abs/1611.05431)
+- 將高維度Convolution分組為多個**相同**卷基層，反觀inception是各個不同的convolution
+- 在不增加參數量的情況下，提高準確率，同時也減少超參數數量
+<img src=https://i.imgur.com/3nWA65P.png width="500" height="300">
+<img src=https://i.imgur.com/NYgxdyo.png width="400" height="520">
+
+- 補充: [paper summarization](https://medium.com/ching-i/resnext-%E8%AB%96%E6%96%87%E9%96%B1%E8%AE%80-7898b1281ef3)
+
+### [ResNeSt (Split-Attention Networks) (2020)](https://arxiv.org/abs/2004.08955)
+- 效果比ResNet好，且不增加額外計算輛，也可做為其他task的backbone (object detection, semantic segmentation)
+- 借鑑ResNeXt的multi-path與SKNet的feature map attention
+- 補充: [paper summarization](https://medium.com/ching-i/resnest-%E8%AB%96%E6%96%87%E9%96%B1%E8%AE%80-fdc800e9b5f4)
