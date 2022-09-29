@@ -117,3 +117,8 @@ input space
 - 效果比ResNet好，且不增加額外計算輛，也可做為其他task的backbone (object detection, semantic segmentation)
 - 借鑑ResNeXt的multi-path與SKNet的feature map attention
 - 補充: [paper summarization](https://medium.com/ching-i/resnest-%E8%AB%96%E6%96%87%E9%96%B1%E8%AE%80-fdc800e9b5f4)
+
+
+### Interpret CNN models
+- [CAM explanation](https://medium.com/@chinesh4/generalized-way-of-interpreting-cnns-a7d1b0178709)
+- [Grad-CAM](https://pyimagesearch.com/2020/03/09/grad-cam-visualize-class-activation-maps-with-keras-tensorflow-and-deep-learning/)
