@@ -114,8 +114,8 @@ class DataLoader(object):
 > 上面寫法有錯請參考 [warm-up+decay](https://stackoverflow.com/questions/65343377/adam-optimizer-with-warmup-on-pytorch): also need to define a function to update the state_dict
 
 **[參考該作法Customized learning rate scheduler](https://github.com/sooftware/pytorch-lr-scheduler)**
-1. learning rate decay
-2. warm up: increase then decrease (also be used in Residual Network, Transformer) -> 在一開始使用Adagrad, RMSprop, Adam 要計算$\sigma$，但一開始樣本數少，較不精準，所以可能需要使用warm up的可能性
+1. **learning rate decay**
+2. **warm up**: increase then decrease (also be used in Residual Network, Transformer) -> 在一開始使用Adagrad, RMSprop, Adam 要計算$\sigma$，但一開始樣本數少，較不精準，所以可能需要使用warm up的可能性
     - Residual Network: 0.01 warm up, then go back to 0.1
     - Transformer: $d_{model}^{-0.5} min(step\_num^{-0.5}, step\_num \ warmup\_steps^{-1.5})$
 
@@ -149,7 +149,9 @@ for epoch in range(100):
     - warm-up: 不要一開始就使用高的learning rate，應從低慢慢升到Base learning rate (減少一開始因樣本數不足產生的訓練誤差)
     - decay: 隨optimization步數增加，降低learning rate
 ![](https://i.imgur.com/1hXODz5.png)
-- 小結: 當一開始訓練一個模型時，還是推薦可以先使用Adam、AdamW配上learning rate warm-up & decay，較簡單好實作，不用調太多參數。
+- **小結: 當一開始訓練一個模型時，還是推薦可以先使用Adam、AdamW配上learning rate warm-up & decay，較簡單好實作，不用調太多參數。**
+    - ![](https://i.imgur.com/c4c1sII.png =400x)
+
 :::
 
 ### Save and Load model
