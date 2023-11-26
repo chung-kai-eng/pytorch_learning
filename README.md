@@ -18,3 +18,7 @@
 
 - [Pretrained Model on pytorch hub](https://www.tensorflow.org/hub)
 - [Pretrained Model on tensorflow hub](https://pytorch.org/hub/research-models)
+
+### Pytorch Lightning
+- [Official documentation](https://lightning.ai/docs/pytorch/stable/)
+- [Quick overview with W&B](https://colab.research.google.com/github/wandb/examples/blob/master/colabs/pytorch-lightning/Supercharge_your_Training_with_Pytorch_Lightning_and_Weights_and_Biases.ipynb)
