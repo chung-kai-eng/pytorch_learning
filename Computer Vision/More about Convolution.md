@@ -1,6 +1,6 @@
 [More information about convolution (standford lecture)](https://cs231n.github.io/convolutional-networks/)
-
 [Conv versus ConvTranspose (the operation procedure)](https://blog.csdn.net/weixin_39228381/article/details/112970097)
+[Adaptive Pooling](https://blog.csdn.net/u013382233/article/details/85948695): The size of the output tensor is always output size
 
 ## Comparison between two structure
 - ```INPUT -> [CONV -> RELU -> POOL]*2 -> FC -> RELU -> FC```: a single convlution layer between every pooling layer
@@ -11,7 +11,6 @@
 - For small kernel size with multiple layer, the non-linear approximation is more expressive and smaller size of storage size. (e.g. compare 1 layer 5x5 conv versus 2 layers 3x3 conv
 - However, in practice, ew might need more memory to hold all the intermediate CONV layer result if we plan to do backpropagation
 
-
 ### Layer Sizing Pattern
 - The common rules of thumb of sizing the architectures
     - The **input layer** should be **divisible by 2 many times**  (e.g. CIFAR-10), 64, 96 (e.g. STL-10), or 224 (e.g. common ImageNet ConvNets), 384, and 512.
@@ -21,10 +20,41 @@
         - if using biggere kernel_size, it is only common to see on the very first convolution layer that is looking at the image. Compromise based on memory constraints. 
     - The **pooling layer**: commonly use **```kernel_size=2, stride=2```**
 
+## Different Model implementation
+- view the `torchvision` and check how they implement the models, which can help you learn much about build up some complex architecture
+
+### VGG
+- the order of the layer: `Conv2d -> BatchNorm2d -> ReLU`
+```python
+cfgs: Dict[str, List[Union[str, int]]] = {
+    "A": [64, "M", 128, "M", 256, 256, "M", 512, 512, "M", 512, 512, "M"],
+    "B": [64, 64, "M", 128, 128, "M", 256, 256, "M", 512, 512, "M", 512, 512, "M"],
+    "D": [64, 64, "M", 128, 128, "M", 256, 256, 256, "M", 512, 512, 512, "M", 512, 512, 512, "M"],
+    "E": [64, 64, "M", 128, 128, "M", 256, 256, 256, 256, "M", 512, 512, 512, 512, "M", 512, 512, 512, 512, "M"],
+}
+
+def make_layers(cfg: List[Union[str, int]], batch_norm: bool = False) -> nn.Sequential:
+    layers: List[nn.Module] = []
+    in_channels = 3
+    for v in cfg:
+        if v == "M":
+            layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
+        else:
+            v = cast(int, v)
+            conv2d = nn.Conv2d(in_channels, v, kernel_size=3, padding=1)
+            if batch_norm:
+                layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=True)]
+            else:
+                layers += [conv2d, nn.ReLU(inplace=True)]
+            in_channels = v
+    return nn.Sequential(*layers)
+```
 
 ### [ResNet (2016)](https://arxiv.org/pdf/1512.03385.pdf) Different Residual Block
 - [More exploration about residual net](http://torch.ch/blog/2016/02/04/resnets.html)
 - ```Residualblock``` (2 layers shortcut connection) & ```BottleNeck``` (3 layers shortcut connection)
+    - Residualblock: `block_expansion`
+    - BottleNeck: `block_expansion`  
 ![](https://i.imgur.com/unjyMuv.png)
 - **putting batch normalization after the addition significantly hurt test error on CIFAR**
 - After construct the model, try to alternate different optimizer
