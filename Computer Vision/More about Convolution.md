@@ -1,6 +1,6 @@
-[More information about convolution (standford lecture)](https://cs231n.github.io/convolutional-networks/)
-[Conv versus ConvTranspose (the operation procedure)](https://blog.csdn.net/weixin_39228381/article/details/112970097)
-[Adaptive Pooling](https://blog.csdn.net/u013382233/article/details/85948695): The size of the output tensor is always output size
+- [More information about convolution (standford lecture)](https://cs231n.github.io/convolutional-networks/)
+- [Conv versus ConvTranspose (the operation procedure)](https://blog.csdn.net/weixin_39228381/article/details/112970097)
+- [Adaptive Pooling](https://blog.csdn.net/u013382233/article/details/85948695): The size of the output tensor is always output size
 
 ## Comparison between two structure
 - ```INPUT -> [CONV -> RELU -> POOL]*2 -> FC -> RELU -> FC```: a single convlution layer between every pooling layer
